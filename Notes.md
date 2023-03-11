@@ -69,3 +69,182 @@
 
 #### Graph Databases
 - Graphs are basically structures that depict connections between two or more objects in some data. The objects or entities are called nodes and are joined together by relationships called Edges. Each edge has a unique identifier. Each node serves as a point of contact for the graph.
+
+
+## Sub Language of SQL
+- ### DDL (Data Definition Language)
+    - CREATE, ALTER, DROP, RENAME, TRUNCATE.
+
+- ### DML (Data Manipulation Language)
+    - INSERT, DELETE, UPDATE
+
+- ### DRL/DQL (Data Retrieval/Query Language)
+    - SELECT
+
+- ### TCL (Transaction Control Language)
+    - COMMIT, ROLLBACK, SAVEPOINT
+
+- ### DCL (Data Control Language)
+    - GRANT, REVOKE
+
+``` 
+create database pesto_database;
+use pesto_database;
+-- Case Insensitive 
+-- Data Definition Language
+create table emp(
+	empNo int(4) primary key,
+    ename varchar(50) not null,
+    job varchar(50) not null,
+    mgr int(4),
+    hiredate date,
+    -- DECIMAL (total num of digits, digits after decimal) 
+    sal decimal(10,2),
+    comm decimal(10,2),
+    deptno int(2)
+);
+
+
+-- insert valules
+--  DATA MANIPULATION LANGUAGE
+insert into emp values
+(7369, 'SMITH', 'CLERK', 7902, '93/6/13', 800.0, 0.00, 20);
+
+-- DELETE DATA VALUES
+TRUNCATE TABLE emp;
+
+-- ROLLBACK DOES not work after a commit.
+
+create TABLE dept(
+	deptno int(4) primary key,
+    dname varchar(40) not null,
+    location varchar(50) not null
+);
+
+create table salgrade(
+	grade int(4) primary key,
+    losal decimal(10,2),
+    hisal decimal(10,2)
+);
+
+-- DROP COMMAND DELETE THE VALUES
+drop table salgrade;
+
+
+-- CONDITIONAL OPERATOR
+ -- WHERE - condition
+SELECT * FROM emp WHERE deptno = 10;
+
+-- WHEN WE WANT TO SEE SPECIFIC COLUMNS
+SELECT ename, job, sal FROM emp WHERE sal = 1600;
+
+-- CONCATENATE TWO COLUMNS
+SELECT concat(dname," ", location) as RandomColumName from dept;
+
+-- DISTINCT OPERATOR
+select distinct(deptno) from emp;
+
+-- LOGICAL OPERATORS
+-- AND OPERATOR
+SELECT * FROM salgrade where grad < 4 and hisal > 4000;
+
+-- OR OPERATOR
+SELECT * FROM emp where deptno = 20 or deptno = 30;
+
+-- NOT OPERATOR
+SELECT * FROM emp WHERE deptno != 30;
+
+-- BETWEEN OPERATOR
+SELECT * FROM emp WHERE sal between 2000 and 6000;
+
+-- IN OPERATOR
+SELECT * FROM emp WHERE deptno = 10 or deptno = 20; 
+-- IT can be written as 
+SELECT * FROM emp WHERE deptno in (10,20);
+
+-- SINGLE QUOTE
+SELECT * FROM emp WHERE ename = 'ALLEN';
+
+-- LIKE OPERATOR PATTERN MATCHING
+SELECT * FROM emp WHERE ename like'S%'; -- START WITH S
+
+SELECT * FROM emp WHERE ename like 'a%'; -- STARTS WITH A CASE INSENSITIVE
+
+SELECT * FROM emp WHERE ename like '%n'; -- ENDS WITH N
+
+SELECT * FROM emp WHERE ename like '%in'; -- ENDS WITH in
+
+SELECT * FROM emp WHERE ename like '%l_%'; -- second character should be L 
+
+SELECT * FROM emp WHERE ename like 'A___N'; -- Starts with A 3 character between and Ends with N.
+
+SELECT * FROM emp WHERE ename like 'k%n'; -- starts with k ends with n in between any charcaters.
+
+
+-- UPDATE OPERATIONS
+UPDATE emp set job = 'analyst', deptno=30 where empno=7876; -- UPDATE job, deptno from empno 7876.
+
+UPDATE salgrade set losal = 1000; -- sets all the values of losal to 1000
+
+update dept set deptno=25; -- as dept no is primary key so ther cannot be repeated gives error.
+
+UPDATE emp SET mgr = NULL where empno=7876; -- updates the value to the null.
+
+-- DELETE OPERATIONS
+DELETE from salgrade where grade > 5; -- DELETE ROWS from grade greater than 6.
+
+DELETE from salgrade WHERE grade > 3 and losal < 3000;
+
+DELETE from salgrade; -- SAME as truncate operation. but truncate is faster.alter
+
+-- AGGREGATE FUNCTIONS
+
+-- count 
+SELECT count(*) from emp; -- returns the number of rows.
+
+-- min
+SELECT min(salary) from emp; -- returns the minimum salary.
+
+-- max
+SELECT max(salary) from emp; -- returns the maximum salary,
+
+-- avg
+SELECT avg(salary) from emp; -- returns the average salary.
+
+-- GROUPBY CLAUSE
+
+SELECT job, avg(sal) from emp GROUP By job; -- will make group of same job and give average of their salary.
+
+-- Order By clause
+
+SELECT * FROM emp Order by sal; -- will order the result in ascending order according to the salary.
+
+SELECT * FROM emp Order by sal desc; -- will order the result in descending order according to the salary.
+
+SELECT job, count(*) as number_of_employee from emp group by job; -- count people for a particular job.
+
+SELECT job, count(job) as number_of_employee from emp group by job; -- count people for a particular job.
+
+SELECT Deptno, sum(Sal), min(sal), max(sal), count(*) from emp Group by deptno;
+
+-- JOINS
+
+-- Inner join - only intersection data can be retrieved.
+-- Left Outer Join - left table data and common data.
+-- right outer join - right table data and common data.
+
+SELECT e.empno, e.ename, d.dname, e.job
+FROM emp as e
+LEFT JOIN dept as d
+on e.deptno = d.deptno
+UNION
+SELECT e.empno, e.ename, d.dname, e.job
+FROM emp as e
+RIGHT JOIN dept as d
+ON e.deptno=d.deptno; 
+
+-- full outer join - left, right and common data
+
+
+
+```
