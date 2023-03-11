@@ -42,3 +42,30 @@
     - recovery to the most recent successfu/commit after a CPU failure
     - recovery to the most recent successfu/backup after a disk failure
     - recovery to the most recent successfu/commit after a data disk failure
+
+### Database Storage
+- Databases typically store large amounts of data that must persist over long periods of time, and hence the data is often referred to as persistent data. 
+- Parts of this data are accessed and processed repeatedly during the storage period. 
+- This contrasts with the notion of transient data, which persists for only a limited time during program execution.
+- The data stored on disk is organized as files of records. Each record is a collection of data values that can be interpreted as facts about tables, their columns, and their relationships.
+- Records should be stored on disk in a manner that makes it possible to locate them efficiently when they are needed.
+
+### NoSQL Databases
+- NoSQL systems are also sometimes called Not only SQL to emphasize the fact that they may support SQL-Iike query languages.
+- The data structures used by NoSQL databases are different from those used by default in relational databases which makes some operations faster in NoSQL.
+
+#### Key Value Database
+- The key-value pair storage databases generally store data as a hash table where each key is unique. The value can be of any type (JSON, BLOB(Binary Large Object), strings, etc). This type of pattern is usually used in shopping websites or e- commerce applications.
+
+    - ADVANTAGES - Can handle large amounts of data and heavy load, Easy retrieval of data by keys.
+    - DISADVANTAGES - Complex queries may attempt to involve multiple key-value pairs which may delay performance.
+
+#### Column Store Databases
+- Rather than storing data in relational tuples, the data is stored in individual cells which are further grouped into columns. Column-oriented databases work only on columns.
+
+- They store large amounts of data into columns together. Format and titles of the columns can diverge from one row to other. Every column is treated separately. But still, each individual column may contain multiple other columns like traditional databases
+
+- Aggreagate functions can be easily performed.
+
+#### Graph Databases
+- Graphs are basically structures that depict connections between two or more objects in some data. The objects or entities are called nodes and are joined together by relationships called Edges. Each edge has a unique identifier. Each node serves as a point of contact for the graph.
